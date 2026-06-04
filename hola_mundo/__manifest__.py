@@ -1,11 +1,23 @@
 {
+    'name': "Hola Mundo",
+    'summary': "Mi primer módulo de prueba en el Bootcamp",
+    'version': '19.0.1.0.0',
+    'author': "Yardi",
+    'category': 'Uncategorized',
+    'depends': ['base'],
+    'data': [
+        'views/views.xml',
+    ],
+    'installable': True,
+    'application': True,
+}
+
+
+""" {
     'name': "hola_mundo",
 
     'summary': "Short (1 phrase/line) summary of the module's purpose",
 
-    'description': """
-Long description of module's purpose
-    """,
 
     'author': "My Company",
     'website': "https://www.yourcompany.com",
@@ -34,3 +46,4 @@ Long description of module's purpose
     'application': True,
 }
 
+ """
