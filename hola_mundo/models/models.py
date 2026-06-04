@@ -46,5 +46,4 @@ class ResPartner(models.Model):
                     }),
                 ],
             })
-        
         return records
