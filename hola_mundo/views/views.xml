@@ -1,23 +1,23 @@
 <odoo>
     <data>
-        <!-- Vista de Lista (Antes era 'tree', ahora es 'list' en Odoo 19) -->
+        <!-- 1. Vista de Lista Nativa Odoo 19 -->
         <record id="view_hola_mundo_tarea_list" model="ir.ui.view">
             <name>hola.mundo.tarea.list</name>
             <model>hola.mundo.tarea</model>
             <arch type="xml">
-                <list>
+                <list string="Tareas">
                     <field name="name"/>
                     <field name="is_done"/>
                 </list>
             </arch>
         </record>
 
-        <!-- Vista de Formulario -->
+        <!-- 2. Vista de Formulario Nativa Odoo 19 -->
         <record id="view_hola_mundo_tarea_form" model="ir.ui.view">
             <name>hola.mundo.tarea.form</name>
             <model>hola.mundo.tarea</model>
             <arch type="xml">
-                <form>
+                <form string="Tarea">
                     <sheet>
                         <group>
                             <field name="name"/>
@@ -29,15 +29,15 @@
             </arch>
         </record>
 
-        <!-- Acción para abrir las vistas (En view_mode cambiamos 'tree' por 'list') -->
+        <!-- 3. Acción de Ventana -->
         <record id="action_hola_mundo_tarea" model="ir.actions.act_window">
-            <name>Mis Tareas Hola Mundo</name>
+            <name>Mis Tareas</name>
             <res_model>hola.mundo.tarea</res_model>
             <view_mode>list,form</view_mode>
         </record>
 
-        <!-- Menú Principal y Submenú -->
-        <menuitem id="menu_hola_mundo_root" name="Hola Mundo App" web_icon="base,static/description/icon.png"/>
-        <menuitem id="menu_hola_mundo_tareas" name="Tareas" parent="menu_hola_mundo_root" action="action_hola_mundo_tarea"/>
+        <!-- 4. Menús (Estructura limpia para evitar colisiones en la Web) -->
+        <menuitem id="menu_hola_mundo_root" name="Hola Mundo App" sequence="10"/>
+        <menuitem id="menu_hola_mundo_tareas" name="Tareas" parent="menu_hola_mundo_root" action="action_hola_mundo_tarea" sequence="10"/>
     </data>
 </odoo>
