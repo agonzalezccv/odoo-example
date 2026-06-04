@@ -71,7 +71,7 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_tree"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='complete_name']" position="after">
+                <xpath expr="//field[@name='display_name']" position="after">
                     <field name="is_test_partner" widget="boolean_toggle"/>
                 </xpath>
             </field>
