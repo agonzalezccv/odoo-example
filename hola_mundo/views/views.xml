@@ -1,10 +1,10 @@
 <odoo>
     <data>
-        <!-- Vista de Lista (Tree) -->
-        <record id="view_hola_mundo_tarea_tree" model="ir.ui.view">
-            <name>hola.mundo.tarea.tree</name>
+        <!-- Vista de Lista (Antes era 'tree', ahora es 'list' en Odoo 19) -->
+        <record id="view_hola_mundo_tarea_list" model="ir.ui.view">
+            <name>hola.mundo.tarea.list</name>
             <model>hola.mundo.tarea</model>
-            <arch import_type="xml">
+            <arch type="xml">
                 <list>
                     <field name="name"/>
                     <field name="is_done"/>
@@ -16,7 +16,7 @@
         <record id="view_hola_mundo_tarea_form" model="ir.ui.view">
             <name>hola.mundo.tarea.form</name>
             <model>hola.mundo.tarea</model>
-            <arch import_type="xml">
+            <arch type="xml">
                 <form>
                     <sheet>
                         <group>
@@ -29,7 +29,7 @@
             </arch>
         </record>
 
-        <!-- Acción para abrir las vistas -->
+        <!-- Acción para abrir las vistas (En view_mode cambiamos 'tree' por 'list') -->
         <record id="action_hola_mundo_tarea" model="ir.actions.act_window">
             <name>Mis Tareas Hola Mundo</name>
             <res_model>hola.mundo.tarea</res_model>
