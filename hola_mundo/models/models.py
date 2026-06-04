@@ -1,17 +1,9 @@
-# from odoo import models, fields, api
+from odoo import models, fields
 
+class HolaMundoTarea(models.Model):
+    _name = 'hola.mundo.tarea'
+    _description = 'Tareas de Hola Mundo'
 
-# class hola_mundo(models.Model):
-#     _name = 'hola_mundo.hola_mundo'
-#     _description = 'hola_mundo.hola_mundo'
-
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
-
+    name = fields.Char(string='Título de la Tarea', required=True)
+    description = fields.Text(string='Descripción')
+    is_done = fields.Boolean(string='¿Completada?', default=False)
