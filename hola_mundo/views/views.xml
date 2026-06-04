@@ -1,37 +1,43 @@
 <odoo>
-    <record id="view_hola_mundo_tarea_list" model="ir.ui.view">
-        <name>hola.mundo.tarea.list</name>
-        <model>hola.mundo.tarea</model>
-        <arch type="xml">
-            <list string="Tareas">
-                <field name="name"/>
-                <field name="is_done"/>
-            </list>
-        </arch>
-    </record>
+    <data>
+        <!-- 1. Vista de Lista -->
+        <record id="view_hola_mundo_tarea_list" model="ir.ui.view">
+            <name>hola.mundo.tarea.list</name>
+            <model>hola.mundo.tarea</model>
+            <arch type="xml">
+                <list string="Tareas">
+                    <field name="name"/>
+                    <field name="is_done"/>
+                </list>
+            </arch>
+        </record>
 
-    <record id="view_hola_mundo_tarea_form" model="ir.ui.view">
-        <name>hola.mundo.tarea.form</name>
-        <model>hola.mundo.tarea</model>
-        <arch type="xml">
-            <form string="Tarea">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="description"/>
-                        <field name="is_done"/>
-                    </group>
-                </sheet>
-            </form>
-        </arch>
-    </record>
+        <!-- 2. Vista de Formulario -->
+        <record id="view_hola_mundo_tarea_form" model="ir.ui.view">
+            <name>hola.mundo.tarea.form</name>
+            <model>hola.mundo.tarea</model>
+            <arch type="xml">
+                <form string="Tarea">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="is_done"/>
+                        </group>
+                    </sheet>
+                </form>
+            </arch>
+        </record>
 
-    <record id="action_hola_mundo_tarea" model="ir.actions.act_window">
-        <name>Mis Tareas</name>
-        <res_model>hola.mundo.tarea</res_model>
-        <view_mode>list,form</view_mode>
-    </record>
+        <!-- 3. Accion -->
+        <record id="action_hola_mundo_tarea" model="ir.actions.act_window">
+            <name>Mis Tareas</name>
+            <res_model>hola.mundo.tarea</res_model>
+            <view_mode>list,form</view_mode>
+        </record>
 
-    <menuitem id="menu_hola_mundo_root" name="Hola Mundo App" sequence="10"/>
-    <menuitem id="menu_hola_mundo_tareas" name="Tareas" parent="menu_hola_mundo_root" action="action_hola_mundo_tarea" sequence="10"/>
+        <!-- 4. Menus -->
+        <menuitem id="menu_hola_mundo_root" name="Hola Mundo App" sequence="10"/>
+        <menuitem id="menu_hola_mundo_tareas" name="Tareas" parent="menu_hola_mundo_root" action="action_hola_mundo_tarea" sequence="10"/>
+    </data>
 </odoo>
