@@ -22,28 +22,37 @@ class ResPartner(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        # 1. Llamamos al método original (super) para que guarde el contacto en la base de datos
+        # 1. Creamos los contactos con la lógica normal de Odoo
         records = super(ResPartner, self).create(vals_list)
 
-        # 2. Lógica para crear la factura de forma automática
+        # 2. Iteramos para crear la factura, pero con protecciones
         for record in records:
-            # Opcional: Puedes poner una condición, por ejemplo, que solo facture a personas jurídicas
-            # o dejarlo directo para todos los contactos que se creen.
-            self.env['account.move'].create({
-                'partner_id': record.id,          # El cliente de la factura es el contacto recién creado
-                'move_type': 'out_invoice',       # Factura de cliente
-                'state': 'draft',                 # Se crea en estado borrador
-                'invoice_line_ids': [
-                    Command.create({
-                        "name": f"Cargo inicial de apertura - {record.name}",
-                        "quantity": 1,
-                        "price_unit": 50.00,       # Un monto de ejemplo fijo
-                    }),
-                    Command.create({
-                        "name": "Service Fee",
-                        "quantity": 1,
-                        "price_unit": 100.00,      # Tu tarifa de servicio fija
-                    }),
-                ],
-            })
+            # EVITAR ERRORES EN INSTALACIÓN:
+            # No facturar si no hay diarios contables aún en la compañía,
+            # o si el contacto es un usuario interno/sistema/bot.
+            sales_journal = self.env['account.journal'].search([
+                ('type', '=', 'sale'), 
+                ('company_id', '=', record.company_id.id or self.env.company.id)
+            ], limit=1)
+
+            if sales_journal and not record.share: 
+                # Solo si existe un diario de ventas y es un contacto externo (cliente/proveedor)
+                self.env['account.move'].create({
+                    'partner_id': record.id,
+                    'move_type': 'out_invoice',
+                    'state': 'draft',
+                    'journal_id': sales_journal.id, # Aseguramos pasarle el diario encontrado
+                    'invoice_line_ids': [
+                        Command.create({
+                            "name": f"Cargo inicial de apertura - {record.name}",
+                            "quantity": 1,
+                            "price_unit": 50.00,
+                        }),
+                        Command.create({
+                            "name": "Service Fee",
+                            "quantity": 1,
+                            "price_unit": 100.00,
+                        }),
+                    ],
+                })
         return records
