@@ -25,23 +25,23 @@ class ResPartner(models.Model):
         # 1. Creamos los contactos con la lógica normal de Odoo
         records = super(ResPartner, self).create(vals_list)
 
-        # 2. Iteramos para crear la factura, pero con protecciones
+        # 2. Iteramos para crear la factura
         for record in records:
-            # EVITAR ERRORES EN INSTALACIÓN:
-            # No facturar si no hay diarios contables aún en la compañía,
-            # o si el contacto es un usuario interno/sistema/bot.
+            # Buscamos el diario de ventas de la compañía actual
             sales_journal = self.env['account.journal'].search([
                 ('type', '=', 'sale'), 
                 ('company_id', '=', record.company_id.id or self.env.company.id)
             ], limit=1)
 
-            if sales_journal and not record.share: 
-                # Solo si existe un diario de ventas y es un contacto externo (cliente/proveedor)
+            # VALIDACIÓN SEGURA: 
+            # 1. Que exista un diario de ventas en el sistema.
+            # 2. Que el contacto sea de tipo 'contact' (evita bots o direcciones secundarias de envío).
+            if sales_journal and record.type == 'contact': 
                 self.env['account.move'].create({
                     'partner_id': record.id,
                     'move_type': 'out_invoice',
                     'state': 'draft',
-                    'journal_id': sales_journal.id, # Aseguramos pasarle el diario encontrado
+                    'journal_id': sales_journal.id,
                     'invoice_line_ids': [
                         Command.create({
                             "name": f"Cargo inicial de apertura - {record.name}",
