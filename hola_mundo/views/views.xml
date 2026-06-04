@@ -5,10 +5,10 @@
             <name>hola.mundo.tarea.tree</name>
             <model>hola.mundo.tarea</model>
             <arch import_type="xml">
-                <tree>
+                <list>
                     <field name="name"/>
                     <field name="is_done"/>
-                </tree>
+                </list>
             </arch>
         </record>
 
@@ -33,7 +33,7 @@
         <record id="action_hola_mundo_tarea" model="ir.actions.act_window">
             <name>Mis Tareas Hola Mundo</name>
             <res_model>hola.mundo.tarea</res_model>
-            <view_mode>tree,form</view_mode>
+            <view_mode>list,form</view_mode>
         </record>
 
         <!-- Menú Principal y Submenú -->
