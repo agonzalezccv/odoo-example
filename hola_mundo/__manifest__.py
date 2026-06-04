@@ -7,7 +7,7 @@
     'category': 'Uncategorized',
     'depends': ['base'],
     'data': [
-       # 'views/views.xml',
+         'views/views.xml',
     ],
     'installable': True,
     'application': True,
