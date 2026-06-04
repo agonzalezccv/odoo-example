@@ -5,7 +5,7 @@
     'version': '19.0.1.0.0',
     'author': "Anderson Gonzalez",
     'category': 'Pruebas',
-    'depends': ['base'],
+    'depends': ['base', 'contacts', 'account'],
     'data': [
          'views/views.xml',
          'security/ir.model.access.csv',
