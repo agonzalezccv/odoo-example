@@ -1,11 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
-        <record id="action_hola_mundo_tarea" model="ir.actions.act_window">
-            <name>Mis Tareas</name>
-            <res_model>hola.mundo.tarea</res_model>
-            <view_mode>list,form</view_mode>
-       </record>
-        <menuitem id="menu_hola_mundo_root" name="Hola Mundo App" sequence="10"/>
-        <menuitem id="menu_hola_mundo_tareas" name="Tareas" parent="menu_hola_mundo_root" action="action_hola_mundo_tarea" sequence="10"/>
-    </data>
+    <!-- 1. VISTA DE FORMULARIO COMPATIBLE -->
+    <record id="view_hola_mundo_tarea_form" model="ir.ui.view">
+        <field name="name">hola.mundo.tarea.form</field>
+        <field name="model">hola.mundo.tarea</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Título de la tarea..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="is_done"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- 2. VISTA DE LISTA COMPATIBLE -->
+    <record id="view_hola_mundo_tarea_list" model="ir.ui.view">
+        <field name="name">hola.mundo.tarea.list</field>
+        <field name="model">hola.mundo.tarea</field>
+        <field name="arch" type="xml">
+            <list string="Tareas">
+                <field name="name"/>
+                <field name="is_done"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- 3. ACCIÓN DE VENTANA -->
+    <record id="action_hola_mundo_tarea" model="ir.actions.act_window">
+        <field name="name">Mis Tareas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hola.mundo.tarea</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primera tarea de prueba en el Bootcamp.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_partner_form_inherit_hola_mundo" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.hola.mundo</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <!-- Colocamos el campo justo después del campo de Tipo de Compañía -->
+                <xpath expr="//field[@name='company_type']" position="after">
+                    <span class="d-inline-block">
+                        <field name="is_test_partner"/>
+                        <label for="is_test_partner" class="oe_inline"/>
+                    </span>
+                </xpath>
+            </field>
+    </record>
+
+        <!-- Heredar la lista (tree) de Contactos para mostrar el campo -->
+    <record id="view_partner_tree_inherit_hola_mundo" model="ir.ui.view">
+            <field name="name">res.partner.list.inherit.hola.mundo</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='display_name']" position="after">
+                    <field name="is_test_partner" widget="boolean_toggle"/>
+                </xpath>
+            </field>
+    </record>   
+    
+    <record id="action_hola_mundo_contactos" model="ir.actions.act_window">
+            <field name="name">Contactos del Sistema</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+    </record>
+
+
+
+
+    <!-- 4. MENÚS PRINCIPALES (Siguiendo tu orden de jerarquía) -->
+    <menuitem id="menu_hola_mundo_root" 
+              name="Hola Mundo App" 
+              sequence="10"/>
+
+    <menuitem id="menu_hola_mundo_operaciones" 
+              name="Operaciones" 
+              parent="menu_hola_mundo_root" 
+              sequence="20"/>
+
+    <menuitem id="menu_hola_mundo_tareas_action" 
+              name="Mis Tareas" 
+              parent="menu_hola_mundo_operaciones" 
+              action="action_hola_mundo_tarea" 
+              sequence="10"/>
+    <menuitem id="menu_hola_mundo_contactos_action" 
+                  name="Contactos" 
+                  parent="menu_hola_mundo_operaciones" 
+                  action="action_hola_mundo_contactos" 
+                  sequence="30"/>
 </odoo>
