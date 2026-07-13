@@ -1,0 +1,4 @@
+[submodule "agonzalezccv/odoo_servicios_base"]
+	path = agonzalezccv/odoo_servicios_base
+	url = git@github.com:agonzalezccv/odoo_servicios_base.git
+	branch = mejoras
